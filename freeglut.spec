@@ -3,6 +3,7 @@
 #            PLEASE DON'T SUBMIT THIS PACKAGE TO MAIN/RELEASE YET!            #
 #                                                                             #
 ###############################################################################
+Really.
 
 %define major 3
 %define libfreeglut %mklibname freeglut %major
