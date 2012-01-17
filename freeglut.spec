@@ -4,8 +4,8 @@
 
 Summary:        A freely licensed alternative to the GLUT library
 Name:           freeglut
-Version:        2.6.0
-Release:        %mkrel 1
+Version:        2.8.0
+Release:        1
 URL:            http://freeglut.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # For the manpages
@@ -19,11 +19,6 @@ BuildRequires:  libxi-devel libice-devel
 # properly.  The Obsoletes tag is required in order for any pre-existing
 # "glut" package to be removed and replaced with freeglut when upgrading to
 # freeglut.  Note: This package will NOT co-exist with the glut package.
-
-# Fix linking of the examples -- we don't package them, they just need to
-# compile and link
-Patch0: freeglut-2.6.0-fixld.patch
-Patch1: freeglut-2.6.0-noxwarn.patch
 
 %description
 freeglut is a completely open source alternative to the OpenGL Utility Toolkit
@@ -73,9 +68,6 @@ license.
 
 %prep
 %setup -q -a 1
-%patch0 -p1 -b .fixld
-%patch1 -p1 -b .noxwarn
-
 %build
 # (TV) fix build:
 ./autogen.sh
@@ -88,29 +80,19 @@ chmod -x doc/*.png doc/*.html
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
-rm $RPM_BUILD_ROOT/%{_libdir}/*.la
+rm %{buildroot}/%{_libdir}/*.la
 
-mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man3
+mkdir -p %{buildroot}/%{_mandir}/man3
 install -p -m 644 doc/man/*.3 $RPM_BUILD_ROOT/%{_mandir}/man3
 
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
 %files -n %libname
-%defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README TODO doc/*.png doc/*.html
 # don't include contents of doc/ directory as it is mostly obsolete
 %{_libdir}/libglut*.so.%{major}
 %{_libdir}/libglut*.so.%{major}.*
 
 %files -n %develibname
-%defattr(-,root,root,-)
 %{_includedir}/GL/*.h
 %{_libdir}/libglut.so
 %{_mandir}/man3/*
-
-
