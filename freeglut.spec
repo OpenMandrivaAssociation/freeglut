@@ -86,6 +86,25 @@ rm %{buildroot}/%{_libdir}/*.la
 mkdir -p %{buildroot}/%{_mandir}/man3
 install -p -m 644 doc/man/*.3 $RPM_BUILD_ROOT/%{_mandir}/man3
 
+# We take the soname as the version because the package
+# version doesn't really match -- the last release of
+# the original glut was 3.7, and we need to match/exceed
+# its version number.
+VER=`ls %buildroot%_libdir/libglut.so.?.?.? |sed -e 's,.*\.so\.,,'`
+mkdir -p %buildroot%_libdir/pkgconfig
+cat >%buildroot%_libdir/pkgconfig/glut.pc <<EOF
+prefix=%_prefix
+libdir=%_libdir
+includedir=%_includedir/GL
+
+Name: glut
+Description: GL Utility Toolkit
+Requires: gl
+Version: $VER
+Libs: -lglut
+Cflags: -I\${includedir}
+EOF
+
 %files -n %libname
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README TODO doc/*.png doc/*.html
 # don't include contents of doc/ directory as it is mostly obsolete
@@ -95,4 +114,5 @@ install -p -m 644 doc/man/*.3 $RPM_BUILD_ROOT/%{_mandir}/man3
 %files -n %develibname
 %{_includedir}/GL/*.h
 %{_libdir}/libglut.so
+%_libdir/pkgconfig/*.pc
 %{_mandir}/man3/*
