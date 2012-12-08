@@ -5,13 +5,16 @@
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Version:	2.8.0
-Release:	3
+Release:	4
+License:	MIT
+Group:		System/Libraries
 URL:		http://freeglut.sourceforge.net
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # For the manpages
 Source1:	http://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
-License:	MIT
-Group:		System/Libraries
+Patch0:		freeglut-2.8.0-fixXInput.patch
+Patch1:		freeglut-2.8.0-btnmask.patch
+Patch2:		freeglut-2.8.0-glextconflict.patch
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(xxf86vm)
@@ -70,6 +73,9 @@ license.
 
 %prep
 %setup -q -a 1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 # (TV) fix build:
@@ -117,4 +123,50 @@ EOF
 %{_libdir}/libglut.so
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
+
+
+%changelog
+* Sun Apr 01 2012 Bernhard Rosenkraenzer <bero@bero.eu> 2.8.0-2
++ Revision: 788576
+- Add a "glut" pkgconfig file - the old Mesa GLUT did, and we want
+  to be a full drop-in replacement
+
+* Tue Jan 17 2012 Alexander Khrukin <akhrukin@mandriva.org> 2.8.0-1
++ Revision: 761958
+- version update 2.8.0
+
+* Sat Nov 26 2011 Александр Казанцев <kazancas@mandriva.org> 2.6.0-1
++ Revision: 733600
+- imported package freeglut
+
+  + Paulo Ricardo Zanoni <pzanoni@mandriva.com>
+    - Prevent accidents for now
+    - imported package freeglut
+
+
+
+* Thu Sep 15 2011 fwang <fwang> 2.6.0-6.mga2
++ Revision: 144028
+- fix group
+- add req on mesaglu as freeglut_std.h requires GL/glu.h
+
+  + ahmad <ahmad>
+    - The -devel package should provide '%%{name}-devel' (mga#2257)
+
+* Wed Apr 20 2011 misc <misc> 2.6.0-4.mga1
++ Revision: 89134
+- add a Requires on the library, not on main package
+- remove explicit requires on -devel, as we have automated requires for that
+
+* Tue Apr 19 2011 tv <tv> 2.6.0-3.mga1
++ Revision: 88822
+- move Provides/Obsoletes/Conflicts into lib subpackage
+
+* Tue Apr 19 2011 tv <tv> 2.6.0-2.mga1
++ Revision: 88460
+- explicitely conflicts with %%libmesaglut3
+
+* Tue Apr 19 2011 tv <tv> 2.6.0-1.mga1
++ Revision: 88413
+- imported package freeglut
 
