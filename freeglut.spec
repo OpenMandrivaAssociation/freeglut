@@ -1,11 +1,12 @@
 %define	major	3
-%define	libname	%mklibname %{name} %{major}
-%define	devname	%mklibname -d %{name}
+%define	libname	%mklibname glut %{major}
+%define	devname	%mklibname -d glut
 
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Version:	2.8.0
 Release:	5
+Epoch:		1
 License:	MIT
 Group:		System/Libraries
 URL:		http://freeglut.sourceforge.net
@@ -43,7 +44,7 @@ Group:		System/Libraries
 Provides:	glut = 3.7
 Obsoletes:	glut < 3.7
 Conflicts:	%{mklibname mesaglut 3}
-%rename		%{_lib}glut3
+%rename		%{_lib}%{name}3
 
 %description -n	%{libname}
 freeglut is a completely open source alternative to the OpenGL Utility Toolkit
@@ -56,14 +57,15 @@ freeglut allows the user to create and manage windows containing OpenGL
 contexts on a wide range of platforms and also read the mouse, keyboard and
 joystick functions.
 
-%package -n %{devname}
+%package -n	%{devname}
 Summary:	Freeglut developmental libraries and header files
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
 Provides:	glut-devel = 3.7
 Obsoletes:	glut-devel < 3.7
-Provides:	%{name}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{EVRD}
 Requires:	pkgconfig(glu)
+%rename		%{_lib}%{name}-devel
 
 %description -n %{devname}
 Developmental libraries and header files required for developing or compiling
@@ -116,8 +118,7 @@ EOF
 %files -n %{libname}
 %doc AUTHORS ChangeLog COPYING NEWS README TODO doc/*.png doc/*.html
 # don't include contents of doc/ directory as it is mostly obsolete
-%{_libdir}/libglut*.so.%{major}
-%{_libdir}/libglut*.so.%{major}.*
+%{_libdir}/libglut.so.%{major}*
 
 %files -n %{devname}
 %{_includedir}/GL/*.h
