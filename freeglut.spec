@@ -1,6 +1,6 @@
-%define major 3
-%define libname %mklibname %{name} %{major}
-%define develibname %mklibname -d %{name}
+%define	major	3
+%define	libname	%mklibname %{name} %{major}
+%define	devname	%mklibname -d %{name}
 
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
@@ -37,7 +37,7 @@ freeglut allows the user to create and manage windows containing OpenGL
 contexts on a wide range of platforms and also read the mouse, keyboard and
 joystick functions.
 
-%package -n %{libname}
+%package -n	%{libname}
 Summary:	A freely licensed alternative to the GLUT library
 Group:		System/Libraries
 Provides:	glut = 3.7
@@ -45,7 +45,7 @@ Obsoletes:	glut < 3.7
 Conflicts:	%{mklibname mesaglut 3}
 %rename		%{_lib}glut3
 
-%description -n %{libname}
+%description -n	%{libname}
 freeglut is a completely open source alternative to the OpenGL Utility Toolkit
 (GLUT) library with an OSI approved free software license. GLUT was originally
 written by Mark Kilgard to support the sample programs in the second edition
@@ -56,7 +56,7 @@ freeglut allows the user to create and manage windows containing OpenGL
 contexts on a wide range of platforms and also read the mouse, keyboard and
 joystick functions.
 
-%package -n %{develibname}
+%package -n %{devname}
 Summary:	Freeglut developmental libraries and header files
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
@@ -65,7 +65,7 @@ Obsoletes:	glut-devel < 3.7
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	pkgconfig(glu)
 
-%description -n %{develibname}
+%description -n %{devname}
 Developmental libraries and header files required for developing or compiling
 software which links to the freeglut library, which is an open source
 alternative to the popular GLUT library, with an OSI approved free software
@@ -91,8 +91,8 @@ chmod -x doc/*.png doc/*.html
 %install
 %makeinstall_std
 
-mkdir -p %{buildroot}/%{_mandir}/man3
-install -p -m 644 doc/man/*.3 %{buildroot}%{_mandir}/man3
+mkdir -p %{buildroot}%{_mandir}/man3
+install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
 
 # We take the soname as the version because the package
 # version doesn't really match -- the last release of
@@ -114,17 +114,16 @@ Cflags: -I\${includedir}
 EOF
 
 %files -n %{libname}
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README TODO doc/*.png doc/*.html
+%doc AUTHORS ChangeLog COPYING NEWS README TODO doc/*.png doc/*.html
 # don't include contents of doc/ directory as it is mostly obsolete
 %{_libdir}/libglut*.so.%{major}
 %{_libdir}/libglut*.so.%{major}.*
 
-%files -n %{develibname}
+%files -n %{devname}
 %{_includedir}/GL/*.h
 %{_libdir}/libglut.so
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
-
 
 %changelog
 * Sun Apr 01 2012 Bernhard Rosenkraenzer <bero@bero.eu> 2.8.0-2
