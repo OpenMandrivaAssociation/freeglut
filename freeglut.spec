@@ -43,6 +43,7 @@ Group:		System/Libraries
 Provides:	glut = 3.7
 Obsoletes:	glut < 3.7
 Conflicts:	%{mklibname mesaglut 3}
+%rename		%{_lib}glut3
 
 %description -n %{libname}
 freeglut is a completely open source alternative to the OpenGL Utility Toolkit
