@@ -5,7 +5,7 @@
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Version:	2.8.0
-Release:	4
+Release:	5
 License:	MIT
 Group:		System/Libraries
 URL:		http://freeglut.sourceforge.net
