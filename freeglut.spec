@@ -4,20 +4,20 @@
 
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
+Epoch:		1
 Version:	2.8.1
 Release:	1
-Epoch:		1
 License:	MIT
 Group:		System/Libraries
-URL:		http://freeglut.sourceforge.net
+Url:		http://freeglut.sourceforge.net
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # For the manpages
 Source1:	http://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
 BuildRequires:	pkgconfig(glu)
-BuildRequires:	pkgconfig(xext)
-BuildRequires:	pkgconfig(xxf86vm)
-BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(ice)
+BuildRequires:	pkgconfig(xext)
+BuildRequires:	pkgconfig(xi)
+BuildRequires:	pkgconfig(xxf86vm)
 # The virtual Provides below is present so that this freeglut package is a
 # drop in binary replacement for "glut" which will satisfy rpm dependancies
 # properly.  The Obsoletes tag is required in order for any pre-existing
@@ -39,9 +39,6 @@ joystick functions.
 Summary:	A freely licensed alternative to the GLUT library
 Group:		System/Libraries
 Provides:	glut = 3.7
-Obsoletes:	glut < 3.7
-Conflicts:	%{mklibname mesaglut 3}
-%rename		%{_lib}%{name}3
 
 %description -n	%{libname}
 freeglut is a completely open source alternative to the OpenGL Utility Toolkit
@@ -59,10 +56,7 @@ Summary:	Freeglut developmental libraries and header files
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
 Provides:	glut-devel = 3.7
-Obsoletes:	glut-devel < 3.7
 Provides:	%{name}-devel = %{EVRD}
-Requires:	pkgconfig(glu)
-%rename		%{_lib}%{name}-devel
 
 %description -n %{devname}
 Developmental libraries and header files required for developing or compiling
@@ -77,7 +71,9 @@ license.
 # (TV) fix build:
 ./autogen.sh
 # --disable-warnings -> don't add -Werror to CFLAGS
-%configure --disable-static --disable-warnings
+%configure \
+	--disable-static \
+	--disable-warnings
 %make
 
 # (TV) fix permissions:
