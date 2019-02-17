@@ -5,24 +5,22 @@
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Epoch:		1
-Version:	2.8.1
-Release:	13
+Version:	3.0.0
+Release:	1
 License:	MIT
 Group:		System/Libraries
 Url:		http://freeglut.sourceforge.net
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source0:	https://datapacket.dl.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz
 # For the manpages
 Source1:	http://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
+Patch0:		freeglut-3.0.0-fix-cmakefiles.patch
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xxf86vm)
-# The virtual Provides below is present so that this freeglut package is a
-# drop in binary replacement for "glut" which will satisfy rpm dependancies
-# properly.  The Obsoletes tag is required in order for any pre-existing
-# "glut" package to be removed and replaced with freeglut when upgrading to
-# freeglut.  Note: This package will NOT co-exist with the glut package.
+BuildRequires:	pkgconfig(libglvnd)
+BuildRequires:	cmake ninja
 
 %description
 freeglut is a completely open source alternative to the OpenGL Utility Toolkit
@@ -38,6 +36,11 @@ joystick functions.
 %package -n	%{libname}
 Summary:	A freely licensed alternative to the GLUT library
 Group:		System/Libraries
+# The virtual Provides below is present so that this freeglut package is a
+# drop in binary replacement for "glut" which will satisfy rpm dependencies
+# properly.  The Obsoletes tag is required in order for any pre-existing
+# "glut" package to be removed and replaced with freeglut when upgrading to
+# freeglut.  Note: This package will NOT co-exist with the glut package.
 Provides:	glut = 3.7
 
 %description -n	%{libname}
@@ -65,22 +68,17 @@ alternative to the popular GLUT library, with an OSI approved free software
 license.
 
 %prep
-%setup -q -a 1
+%autosetup -p1 -a 1
 
 %build
-# (TV) fix build:
-./autogen.sh
-# --disable-warnings -> don't add -Werror to CFLAGS
-%configure \
-	--disable-static \
-	--disable-warnings
-%make
-
-# (TV) fix permissions:
-chmod -x doc/*.png doc/*.html
+%cmake \
+	-DOpenGL_GL_PREFERENCE=GLVND \
+	-DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
+	-G Ninja
+%ninja_build
 
 %install
-%makeinstall_std
+%ninja_install -C build
 
 mkdir -p %{buildroot}%{_mandir}/man3
 install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
@@ -105,7 +103,7 @@ Cflags: -I\${includedir}
 EOF
 
 %files -n %{libname}
-%doc AUTHORS ChangeLog COPYING NEWS README TODO doc/*.png doc/*.html
+%doc AUTHORS ChangeLog COPYING README doc/*.png doc/*.html
 # don't include contents of doc/ directory as it is mostly obsolete
 %{_libdir}/libglut.so.%{major}*
 
@@ -114,4 +112,3 @@ EOF
 %{_libdir}/libglut.so
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*
-
