@@ -1,12 +1,12 @@
-%define	major	3
-%define	libname	%mklibname glut %{major}
-%define	devname	%mklibname -d glut
+%define major 3
+%define libname %mklibname glut %{major}
+%define devname %mklibname -d glut
 
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Epoch:		1
 Version:	3.0.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		System/Libraries
 Url:		http://freeglut.sourceforge.net
@@ -75,6 +75,7 @@ license.
 	-DOpenGL_GL_PREFERENCE=GLVND \
 	-DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
 	-G Ninja
+
 %ninja_build
 
 %install
@@ -87,7 +88,7 @@ install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
 # version doesn't really match -- the last release of
 # the original glut was 3.7, and we need to match/exceed
 # its version number.
-VER=`ls %{buildroot}%{_libdir}/libglut.so.?.?.? |sed -e 's,.*\.so\.,,'`
+VER=$(ls %{buildroot}%{_libdir}/libglut.so.?.?.? |sed -e 's,.*\.so\.,,')
 mkdir -p %{buildroot}%{_libdir}/pkgconfig
 cat >%{buildroot}%{_libdir}/pkgconfig/glut.pc <<EOF
 prefix=%{_prefix}
@@ -103,11 +104,11 @@ Cflags: -I\${includedir}
 EOF
 
 %files -n %{libname}
-%doc AUTHORS ChangeLog COPYING README doc/*.png doc/*.html
 # don't include contents of doc/ directory as it is mostly obsolete
 %{_libdir}/libglut.so.%{major}*
 
 %files -n %{devname}
+%doc AUTHORS ChangeLog COPYING README doc/*.png doc/*.html
 %{_includedir}/GL/*.h
 %{_libdir}/libglut.so
 %{_libdir}/pkgconfig/*.pc
