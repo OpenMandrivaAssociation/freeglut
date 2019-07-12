@@ -1,19 +1,24 @@
 %define major 3
 %define libname %mklibname glut %{major}
 %define devname %mklibname -d glut
+%define snapshot 20190713
 
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Epoch:		1
 Version:	3.0.0
-Release:	3
+Release:	3.%{snapshot}.1
 License:	MIT
 Group:		System/Libraries
 Url:		http://freeglut.sourceforge.net
-Source0:	https://datapacket.dl.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz
+# git clone https://github.com/dcnieho/FreeGLUT.git -b git_master && cd FreeGLUT/freeglut/freeglut/
+# git archive --prefix=freeglut-3.0.0/ --format=tar HEAD | xz > ../freeglut-3.0.0.tar.xz
+Source0:	https://github.com/dcnieho/FreeGLUT/releases/%{name}-%{version}.tar.xz
+#Source0:	https://datapacket.dl.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz
 # For the manpages
 Source1:	http://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
 Patch0:		freeglut-3.0.0-fix-cmakefiles.patch
+Patch1:		freeglut-3.0.0-alt-fix_cmake_dir.patch
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(xext)
