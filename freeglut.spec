@@ -17,7 +17,7 @@ Source0:	https://github.com/dcnieho/FreeGLUT/releases/%{name}-%{version}.tar.xz
 #Source0:	https://datapacket.dl.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz
 # For the manpages
 Source1:	http://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
-#Patch0:		freeglut-3.0.0-fix-cmakefiles.patch
+Patch0:		freeglut-3.0.0-fix-cmakefiles.patch
 Patch1:		freeglut-3.0.0-alt-fix_cmake_dir.patch
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(ice)

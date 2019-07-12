@@ -1,7 +1,7 @@
-diff -up freeglut-3.0.0/CMakeLists.txt.omv~ freeglut-3.0.0/CMakeLists.txt
---- freeglut-3.0.0/CMakeLists.txt.omv~	2019-02-17 03:57:50.497644956 +0100
-+++ freeglut-3.0.0/CMakeLists.txt	2019-02-17 03:59:39.568296589 +0100
-@@ -339,6 +339,7 @@ ENDIF()
+diff -Naur freeglut-3.0.0/CMakeLists.txt freeglut-3.0.0.tpg/CMakeLists.txt
+--- freeglut-3.0.0/CMakeLists.txt	2019-06-07 07:12:59.000000000 +0000
++++ freeglut-3.0.0.tpg/CMakeLists.txt	2019-07-12 23:08:05.381774867 +0000
+@@ -396,6 +396,7 @@
  
  IF(FREEGLUT_BUILD_SHARED_LIBS)
      ADD_LIBRARY(freeglut SHARED ${FREEGLUT_SRCS})
@@ -9,12 +9,12 @@ diff -up freeglut-3.0.0/CMakeLists.txt.omv~ freeglut-3.0.0/CMakeLists.txt
  ENDIF()
  IF(FREEGLUT_BUILD_STATIC_LIBS)
      ADD_LIBRARY(freeglut_static STATIC ${FREEGLUT_SRCS})
-@@ -451,14 +452,14 @@ MACRO(ADD_DEMO name)
+@@ -524,14 +525,14 @@
      IF( FREEGLUT_BUILD_DEMOS )
          IF(FREEGLUT_BUILD_SHARED_LIBS)
              ADD_EXECUTABLE(${name} ${ARGN})
 -            TARGET_LINK_LIBRARIES(${name} ${DEMO_LIBS} freeglut)
-+	    TARGET_LINK_LIBRARIES(${name} ${DEMO_LIBS} freeglut GL)
++            TARGET_LINK_LIBRARIES(${name} ${DEMO_LIBS} freeglut GL)
              IF(WIN32 AND MSVC)
                  SET_TARGET_PROPERTIES(${name} PROPERTIES DEBUG_POSTFIX d)
              ENDIF()
@@ -22,7 +22,7 @@ diff -up freeglut-3.0.0/CMakeLists.txt.omv~ freeglut-3.0.0/CMakeLists.txt
          IF(FREEGLUT_BUILD_STATIC_LIBS)
              ADD_EXECUTABLE(${name}_static ${ARGN})
 -            TARGET_LINK_LIBRARIES(${name}_static ${DEMO_LIBS} freeglut_static)
-+	    TARGET_LINK_LIBRARIES(${name}_static ${DEMO_LIBS} freeglut_static GL)
-             SET_TARGET_PROPERTIES(${name}_static PROPERTIES COMPILE_FLAGS -DFREEGLUT_STATIC)
++            TARGET_LINK_LIBRARIES(${name}_static ${DEMO_LIBS} freeglut_static GL)
              IF(WIN32 AND MSVC)
                  SET_TARGET_PROPERTIES(${name}_static PROPERTIES DEBUG_POSTFIX d)
+             ENDIF()
