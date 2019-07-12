@@ -95,7 +95,7 @@ sed -i -e 's/VERSION_MINOR/SO_MINOR/g' *.pc.in
 
 %install
 %ninja_install -C build
-ln -s glut.pc %%{buildroot}%{_libdir}/pkgconfig/%{name}.pc
+ln -s glut.pc %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
 
 mkdir -p %{buildroot}%{_mandir}/man3
 install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
@@ -109,4 +109,5 @@ install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
 %{_includedir}/GL/*.h
 %{_libdir}/libglut.so
 %{_libdir}/pkgconfig/*.pc
+%{_libdir}/cmake/FreeGLUT/*.cmake
 %{_mandir}/man3/*
