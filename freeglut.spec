@@ -73,6 +73,11 @@ license.
 
 %prep
 %autosetup -p1 -a 1
+# We take the soname as the version because the package
+# version doesn't really match -- the last release of
+# the original glut was 3.7, and we need to match/exceed
+# its version number.
+sed -i -e 's/VERSION_MINOR/SO_MINOR/g' *.pc.in
 
 %build
 %cmake \
@@ -85,6 +90,7 @@ license.
 
 %install
 %ninja_install -C build
+ln -s glut.pc %%{buildroot}%{_libdir}/pkgconfig/%{name}.pc
 
 mkdir -p %{buildroot}%{_mandir}/man3
 install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
