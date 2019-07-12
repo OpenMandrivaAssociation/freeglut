@@ -1,5 +1,6 @@
---- CMakeLists.txt~	2018-10-17 10:49:25.000000000 +0300
-+++ CMakeLists.txt	2018-10-17 11:23:26.351449716 +0300
+diff -Naur freeglut-3.0.0/CMakeLists.txt freeglut-3.0.0.tpg/CMakeLists.txt
+--- freeglut-3.0.0/CMakeLists.txt	2019-06-07 07:12:59.000000000 +0000
++++ freeglut-3.0.0.tpg/CMakeLists.txt	2019-07-12 22:57:21.461132722 +0000
 @@ -622,7 +622,7 @@
      "${CMAKE_CURRENT_BINARY_DIR}/FreeGLUT/FreeGLUTConfig.cmake"
      @ONLY
