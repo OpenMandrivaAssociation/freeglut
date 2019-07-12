@@ -6,7 +6,7 @@ Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Epoch:		1
 Version:	3.0.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		System/Libraries
 Url:		http://freeglut.sourceforge.net
@@ -19,8 +19,10 @@ BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xxf86vm)
+BuildRequires:	pkgconfig(xrandr)
 BuildRequires:	pkgconfig(libglvnd)
-BuildRequires:	cmake ninja
+BuildRequires:	cmake
+BuildRequires:	ninja
 
 %description
 freeglut is a completely open source alternative to the OpenGL Utility Toolkit
@@ -33,7 +35,7 @@ freeglut allows the user to create and manage windows containing OpenGL
 contexts on a wide range of platforms and also read the mouse, keyboard and
 joystick functions.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	A freely licensed alternative to the GLUT library
 Group:		System/Libraries
 # The virtual Provides below is present so that this freeglut package is a
@@ -43,7 +45,7 @@ Group:		System/Libraries
 # freeglut.  Note: This package will NOT co-exist with the glut package.
 Provides:	glut = 3.7
 
-%description -n	%{libname}
+%description -n %{libname}
 freeglut is a completely open source alternative to the OpenGL Utility Toolkit
 (GLUT) library with an OSI approved free software license. GLUT was originally
 written by Mark Kilgard to support the sample programs in the second edition
@@ -54,10 +56,12 @@ freeglut allows the user to create and manage windows containing OpenGL
 contexts on a wide range of platforms and also read the mouse, keyboard and
 joystick functions.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Freeglut developmental libraries and header files
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
+Requires:	pkgconfig(libglvnd)
+Requires:	pkgconfig(glu)
 Provides:	glut-devel = 3.7
 Provides:	%{name}-devel = %{EVRD}
 
@@ -73,6 +77,7 @@ license.
 %build
 %cmake \
 	-DOpenGL_GL_PREFERENCE=GLVND \
+	-DFREEGLUT_REPLACE_GLUT:BOOL=ON \
 	-DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
 	-G Ninja
 
@@ -83,25 +88,6 @@ license.
 
 mkdir -p %{buildroot}%{_mandir}/man3
 install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
-
-# We take the soname as the version because the package
-# version doesn't really match -- the last release of
-# the original glut was 3.7, and we need to match/exceed
-# its version number.
-VER=$(ls %{buildroot}%{_libdir}/libglut.so.?.?.? |sed -e 's,.*\.so\.,,')
-mkdir -p %{buildroot}%{_libdir}/pkgconfig
-cat >%{buildroot}%{_libdir}/pkgconfig/glut.pc <<EOF
-prefix=%{_prefix}
-libdir=%{_libdir}
-includedir=%{_includedir}/GL
-
-Name: glut
-Description: GL Utility Toolkit
-Requires: gl
-Version: $VER
-Libs: -lglut
-Cflags: -I\${includedir}
-EOF
 
 %files -n %{libname}
 # don't include contents of doc/ directory as it is mostly obsolete
