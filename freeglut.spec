@@ -95,6 +95,8 @@ sed -i -e 's/VERSION_MINOR/SO_MINOR/g' *.pc.in
 
 %install
 %ninja_install -C build
+# always install glut.h and freeglut.pc
+install -m644 include/GL/glut.h %{buildroot}%{_includedir}/GL
 ln -s glut.pc %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
 
 mkdir -p %{buildroot}%{_mandir}/man3
