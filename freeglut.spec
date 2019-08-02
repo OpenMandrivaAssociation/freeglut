@@ -2,12 +2,13 @@
 %define libname %mklibname glut %{major}
 %define devname %mklibname -d glut
 %define snapshot 20190713
+%global optflags %{optflags} -O3
 
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Epoch:		1
 Version:	3.0.0
-Release:	3.%{snapshot}.1
+Release:	4.%{snapshot}.1
 License:	MIT
 Group:		System/Libraries
 Url:		http://freeglut.sourceforge.net
