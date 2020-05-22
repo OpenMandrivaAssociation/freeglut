@@ -112,7 +112,7 @@ Summary:	Freeglut developmental libraries and header filesa (32-bit)
 Group:		Development/C
 Requires:	%{devname} = %{EVRD}
 Requires:	%{lib32name} = %{EVRD}
-Requires:	devel(libglvnd)
+Requires:	devel(libGL)
 Requires:	devel(libGLU)
 
 %description -n %{dev32name}
