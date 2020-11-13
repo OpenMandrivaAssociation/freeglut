@@ -9,7 +9,7 @@
 %define libname %mklibname glut %{major}
 %define devname %mklibname -d glut
 %define snapshot 20190713
-%global optflags %{optflags} -O3 -fno-strict-aliasing
+%global optflags %{optflags} -O3 -fno-strict-aliasing -fcommon
 
 %define lib32name libglut%{major}
 %define dev32name libglut-devel
