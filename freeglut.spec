@@ -173,7 +173,7 @@ install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
 %{_libdir}/libglut.so.%{major}*
 
 %files -n %{devname}
-%doc AUTHORS ChangeLog COPYING README doc/*.png doc/*.html
+%doc AUTHORS ChangeLog COPYING README
 %{_includedir}/GL/*.h
 %{_libdir}/libglut.so
 %{_libdir}/pkgconfig/*.pc
