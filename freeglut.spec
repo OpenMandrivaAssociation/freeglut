@@ -17,7 +17,7 @@
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Epoch:		1
-Version:	3.2.2
+Version:	3.4.0
 Release:	1
 License:	MIT
 Group:		System/Libraries
@@ -173,7 +173,7 @@ install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
 %{_libdir}/libglut.so.%{major}*
 
 %files -n %{devname}
-%doc AUTHORS ChangeLog COPYING README
+%doc AUTHORS ChangeLog COPYING README*
 %{_includedir}/GL/*.h
 %{_libdir}/libglut.so
 %{_libdir}/pkgconfig/*.pc
