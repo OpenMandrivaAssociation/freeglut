@@ -35,6 +35,7 @@ BuildRequires:	pkgconfig(libglvnd)
 BuildRequires:	cmake
 BuildRequires:	ninja
 %if %{with compat32}
+BuildRequires:	libc6
 BuildRequires:	devel(libGLU)
 BuildRequires:	devel(libICE)
 BuildRequires:	devel(libXext)
@@ -178,7 +179,7 @@ install -p -m644 doc/man/*.3 %{buildroot}%{_mandir}/man3
 %{_libdir}/libglut.so
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/cmake/FreeGLUT/*.cmake
-%{_mandir}/man3/*
+%doc %{_mandir}/man3/*
 
 %if %{with compat32}
 %files -n %{lib32name}
