@@ -17,13 +17,13 @@
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Epoch:		1
-Version:	3.4.0
-Release:	2
+Version:	3.6.0
+Release:	1
 License:	MIT
 Group:		System/Libraries
-Url:		http://freeglut.sourceforge.net
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Source1:	http://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
+Url:		https://freeglut.sourceforge.net
+Source0:	https://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source1:	https://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
 Patch0:		freeglut-3.0.0-fix-cmakefiles.patch
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(ice)
