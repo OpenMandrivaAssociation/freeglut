@@ -6,7 +6,8 @@
 %endif
 
 %define major 3
-%define libname %mklibname glut %{major}
+%define libname %mklibname glut
+%define oldlibname %mklibname glut 3
 %define devname %mklibname -d glut
 %define snapshot 20190713
 %global optflags %{optflags} -O3 -fno-strict-aliasing -fcommon
@@ -17,13 +18,13 @@
 Summary:	A freely licensed alternative to the GLUT library
 Name:		freeglut
 Epoch:		1
-Version:	3.4.0
-Release:	2
+Version:	3.6.0
+Release:	1
 License:	MIT
 Group:		System/Libraries
-Url:		http://freeglut.sourceforge.net
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Source1:	http://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
+Url:		https://freeglut.sourceforge.net
+Source0:	https://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source1:	https://downloads.sourceforge.net/openglut/openglut-0.6.3-doc.tar.gz
 Patch0:		freeglut-3.0.0-fix-cmakefiles.patch
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(ice)
@@ -64,6 +65,7 @@ Group:		System/Libraries
 # properly.  The Obsoletes tag is required in order for any pre-existing
 # "glut" package to be removed and replaced with freeglut when upgrading to
 # freeglut.  Note: This package will NOT co-exist with the glut package.
+%rename: %{oldlibname}
 Provides:	glut = 3.7
 
 %description -n %{libname}
