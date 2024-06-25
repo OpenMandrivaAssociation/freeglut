@@ -6,7 +6,8 @@
 %endif
 
 %define major 3
-%define libname %mklibname glut %{major}
+%define libname %mklibname glut
+%define oldlibname %mklibname glut 3
 %define devname %mklibname -d glut
 %define snapshot 20190713
 %global optflags %{optflags} -O3 -fno-strict-aliasing -fcommon
@@ -64,6 +65,7 @@ Group:		System/Libraries
 # properly.  The Obsoletes tag is required in order for any pre-existing
 # "glut" package to be removed and replaced with freeglut when upgrading to
 # freeglut.  Note: This package will NOT co-exist with the glut package.
+%rename: %{oldlibname}
 Provides:	glut = 3.7
 
 %description -n %{libname}
