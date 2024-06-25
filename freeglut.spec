@@ -65,7 +65,7 @@ Group:		System/Libraries
 # properly.  The Obsoletes tag is required in order for any pre-existing
 # "glut" package to be removed and replaced with freeglut when upgrading to
 # freeglut.  Note: This package will NOT co-exist with the glut package.
-%rename: %{oldlibname}
+%rename oldlibname
 Provides:	glut = 3.7
 
 %description -n %{libname}
